@@ -1,3 +1,3 @@
 # fdf
 
-![screenshot](sss?raw=true)
+![screenshot](sss.png?raw=true)
