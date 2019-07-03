@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masprigg <masprigg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fsnow-be <fsnow-be@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 23:31:28 by masprigg          #+#    #+#             */
-/*   Updated: 2019/05/29 00:58:09 by aim1c            ###   ########.fr       */
+/*   Updated: 2019/05/28 13:48:14 by fsnow-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "ft_printf.h"
 
 # define MERROR(e) if (!e) return (-1);
 
