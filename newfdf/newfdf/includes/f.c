@@ -76,7 +76,7 @@ double			true_gap(int wi, int hi, int xz, int yz)
 		return (count);
 }
 
-void			iso(t_point **ve)
+void			iso(t_point **ve, t_camera *loc)
 {
 	int previous_x;
 	int previous_y;
@@ -84,7 +84,7 @@ void			iso(t_point **ve)
 
 	previous_x = (*ve)->x;
 	previous_y = (*ve)->y;
-	z = (*ve)->z;
-	(*ve)->x = (previous_x - previous_y) * cos(0.523599);
-	(*ve)->y = -z + (previous_x + previous_y) * sin(0.523599);
+	z = (*ve)->z * loc->z;
+	loc->x = (previous_x - previous_y) * cos(0.523599);
+	loc->y = -z + (previous_x + previous_y) * sin(0.523599);
 }

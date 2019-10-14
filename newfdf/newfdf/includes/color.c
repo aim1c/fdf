@@ -27,7 +27,7 @@ int		get_light(int start, int end, double percentage)
 	return ((int)((1 - percentage) * start + percentage * end));
 }
 
-int		get_color(t_point *current, t_point *start, t_point *end, t_d *d)
+int		get_color(t_camera *current, t_camera *start, t_camera *end, t_d *d)
 {
 	int		red;
 	int		green;

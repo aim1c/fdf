@@ -79,9 +79,6 @@ static void		min_max(t_map **mp, t_point *ve)
 			ve = (*mp)->vectors[y * (*mp)->x + x];
 			f(ve, count);
 			min2(ve, &min, &max);
-			if ((*mp)->proj == 1) {
-				iso(&ve);
-			}
 		}
 	}
 	(*mp)->min = min;

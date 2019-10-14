@@ -36,11 +36,11 @@ void		ret(int *a, t_d *b, int s)
 	*a = -1;
 }
 
-int			plot_line_low(t_point *v0, t_point *v1, t_fdf *m)
+int			plot_line_low(t_camera *v0, t_camera *v1, t_fdf *m)
 {
 	t_d		d;
 	int		yi;
-	t_point	c;
+	t_camera	c;
 	double	dd;
 
 	d.dx = v1->x - v0->x;
@@ -64,10 +64,10 @@ int			plot_line_low(t_point *v0, t_point *v1, t_fdf *m)
 	return (1);
 }
 
-int			plot_line_high(t_point *v0, t_point *v1, t_fdf *m)
+int			plot_line_high(t_camera *v0, t_camera *v1, t_fdf *m)
 {
 	t_d		d;
-	t_point	c;
+	t_camera	c;
 	int		xi;
 	int		dd;
 
@@ -92,7 +92,7 @@ int			plot_line_high(t_point *v0, t_point *v1, t_fdf *m)
 	return (1);
 }
 
-int			plot_line(t_point *v0, t_point *v1, t_fdf *m)
+int			plot_line(t_camera *v0, t_camera *v1, t_fdf *m)
 {
 	if (mod(v1->y - v0->y) < mod(v1->x - v0->x))
 	{
@@ -108,6 +108,10 @@ int			plot_line(t_point *v0, t_point *v1, t_fdf *m)
 		else
 			plot_line_high(v0, v1, m);
 	}
+	
+	free(v0);
+	free(v1);
+	
 	return (1);
 }
 
@@ -125,6 +129,23 @@ void		fill(t_fdf *mlx) {
 	}
 }
 
+t_camera *new_camera(t_point **ve, t_camera *loc, t_map *mp) {
+	
+	t_camera *new = malloc(sizeof(t_camera));
+	
+	if (mp->proj == 1) {
+		new->z = (*ve)->z * loc->z;
+		iso(ve, new);
+	} else {
+		new->x = (*ve)->x;
+		new->y = (*ve)->y;
+	}
+	new->x += loc->step_x;
+	new->y += loc->step_y;
+	new->color = (*ve)->color;
+	return new;
+}
+
 void		render(t_fdf *mlx, t_map *map)
 {
 	int x;
@@ -139,15 +160,12 @@ void		render(t_fdf *mlx, t_map *map)
 		x = -1;
 		while (++x < map->x)
 		{
-			if (map->proj == 1) {
-				iso(&map->vectors[y * map->x + x]);
-			}
 			if (x + 1 < map->x)
-				plot_line(map->vectors[y * map->x + x],
-						map->vectors[y * map->x + x + 1], mlx);
+				plot_line(new_camera(&map->vectors[y * map->x + x], map->loc, map),
+						new_camera(&map->vectors[y * map->x + (x + 1)], map->loc, map), mlx);
 			if (y + 1 < map->y)
-				plot_line(map->vectors[y * map->x + x],
-						map->vectors[(y + 1) * map->x + x], mlx);
+				plot_line(new_camera(&map->vectors[y * map->x + x], map->loc, map),
+						new_camera(&map->vectors[(y + 1) * map->x + x], map->loc, map), mlx);
 		}
 	}
 	printf("%f\n", map->vectors[0]->x);

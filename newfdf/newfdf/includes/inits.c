@@ -64,6 +64,12 @@ t_map		*map_init(int width, int height)
 	map->proj = 1;
 	vector = malloc(sizeof(t_point *) * width * height);
 	map->scheme = colors_init();
+	map->loc = malloc(sizeof(t_camera));
+	map->loc->x = 0;
+	map->loc->y = 0;
+	map->loc->z = 0.1;
+	map->loc->step_x = 0;
+	map->loc->step_y = 0;
 	if (vector == 0)
 		exit_warning("vector = null");
 	map->vectors = vector;
@@ -95,7 +101,7 @@ t_point		*init_vect(int x, int y, char *z)
 	vect = ft_memalloc(sizeof(t_point));
 	vect->x = (double)x;
 	vect->y = (double)y;
-	vect->z = (double)ft_atoi(z) * 10;
+	vect->z = (double)ft_atoi(z);
 	vect->color = 0xFFFFFF;
 	return (vect);
 }

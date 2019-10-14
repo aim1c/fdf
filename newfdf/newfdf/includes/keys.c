@@ -13,63 +13,27 @@
 #include "fdf.h"
 #define STEP 20
 
-int		move_r(t_map *m)
+int		move_r(t_camera *m)
 {
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < m->y)
-	{
-		x = -1;
-		while (++x < m->x)
-			m->vectors[y * m->x + x]->x += STEP;
-	}
+	m->step_x -= STEP;
 	return (1);
 }
 
-int		move_d(t_map *m)
+int		move_d(t_camera *m)
 {
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < m->y)
-	{
-		x = -1;
-		while (++x < m->x)
-			m->vectors[y * m->x + x]->y += STEP;
-	}
+	m->step_y -= STEP;
 	return (1);
 }
 
-int		move_l(t_map *m)
+int		move_l(t_camera *m)
 {
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < m->y)
-	{
-		x = -1;
-		while (++x < m->x)
-			m->vectors[y * m->x + x]->x -= STEP;
-	}
+	m->step_x += STEP;
 	return (1);
 }
 
-int		move_u(t_map *m)
+int		move_u(t_camera *m)
 {
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < m->y)
-	{
-		x = -1;
-		while (++x < m->x)
-			m->vectors[y * m->x + x]->y -= STEP;
-	}
+	m->step_y += STEP;
 	return (1);
 }
 
@@ -81,13 +45,13 @@ int		key_press(int code, void *param)
 	if (code == 53)
 		exit(EXIT_SUCCESS);
 	if (code == 124 || code == 2)
-		move_l(mlx->map);
+		move_l(mlx->map->loc);
 	if (code == 125 || code == 1)
-		move_u(mlx->map);
+		move_u(mlx->map->loc);
 	if (code == 123 || code == 0)
-		move_r(mlx->map);
+		move_r(mlx->map->loc);
 	if (code == 126 || code == 13)
-		move_d(mlx->map);
+		move_d(mlx->map->loc);
 	if (code == 24)
 		intense(mlx->map);
 	if (code == 27)
@@ -102,6 +66,10 @@ int		key_press(int code, void *param)
 	if (code == 35) {
 		mlx->map->proj = 2;
 	}
+	if (code == 6)
+		mlx->map->loc->z -= 0.1;
+	if (code == 8)
+		mlx->map->loc->z += 0.1;
 	render(mlx, mlx->map);
 	return (1);
 }
